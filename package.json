@@ -1,0 +1,37 @@
+{
+  "name": "proyecto_final_coderhouse",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon src/app.js --mode production",
+    "dev": "nodemon src/app.js --mode development",
+    "image-prod": "docker build -t app-backend-coderhouse-prod .",
+    "image-dev": "docker build -t app-backend-coderhouse-dev .",
+    "container-prod": "docker run -p 9999:8081 app-backend-coderhouse-prod",
+    "container-dev": "docker run -p 8888:8082 app-backend-coderhouse-dev ",
+    "super": "mocha test/supertest"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "artillery": "^2.0.0-38",
+    "bcryptjs": "^2.4.3",
+    "cluster": "^0.7.7",
+    "commander": "^11.1.0",
+    "connect-mongo": "^5.1.0",
+    "cookie-parser": "^1.4.6",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "express-compression": "^1.0.2",
+    "express-session": "^1.17.3",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.0.1",
+    "nodemon": "^3.0.1",
+    "passport": "^0.6.0",
+    "socket.io": "^4.7.2"
+  }
+}
