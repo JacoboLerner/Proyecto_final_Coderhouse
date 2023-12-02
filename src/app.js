@@ -10,7 +10,9 @@ import  config  from "./config/env.js";
 import cluster from "cluster";
 import { cpus } from "os";
 import compression from "express-compression";
-
+import __dirname from "./dirname.js";
+import errorHandlers from "./middlewares/errorHandlers.js";
+import router from "./routes/indexRouter.js"
 
 
 const numberOfProcess = cpus().length-1
@@ -21,6 +23,7 @@ const io =  new SocketServer(httpServer)
 app.use(express.urlencoded({extended:true}));
 app.use(express.json());
 app.use(cookieParser());
+app.use(express.static( __dirname + "/public"))
 const conn= mongoose.connect(config.mongoUrl)
 
 app.use(
@@ -48,9 +51,9 @@ app.use((req,res,next)=>{
     next();
     })
 
-app.get("/", (req,res)=>{
-    return res.status(200).json({message:"hola mundost"})
-})
+app.use("/api",router)
+
+app.use(errorHandlers)
 
 if(cluster.isPrimary){
         console.log("primary");
