@@ -7,7 +7,7 @@ const createCart = async (req, res, next) => {
   try {
     let { uid, pid } = req.params;
     const product = await ProductModel.findById(pid)
-    let data = { owner: uid, products: {product:product._id, quantity:1} };
+    let data = { owner: uid, products: {product:product._id, quantity:1,price:product.price,total:product.price},totalPrice:product.price };
     let response = await new CartsService().create(data, next);
     return res.status(201).json({ status: "success", payload: response });
   } catch (error) {
@@ -39,8 +39,8 @@ const getAllCarts = async (req, res, next) => {
 
 const getCart = async (req, res, next) => {
   try {
-    let { aid } = req.params;
-    let response = await new CartsService().getBy(aid, next);
+    let { cid } = req.params;
+    let response = await new CartsService().getBy(cid, next);
     if (response) {
       return res.status(200).json({ status: "success", payload: response });
     }
@@ -83,7 +83,7 @@ const deleteCart = async (req, res, next) => {
     try {
       const cid = req.params.cid;
       const pid = req.params.pid;
-      const result = await CartsService.addProductToCart(cid, pid, next);
+      const result = await new CartsService().addProductToCart(cid, pid, next);
       if (result) {
         return res.status(200).json({ status: "success", payload: result._id });
       }
@@ -98,7 +98,7 @@ const deleteCart = async (req, res, next) => {
     try {
       const cid = req.params.cid;
       const pid = req.params.pid;
-      const result = await CartsService.deleteProductFromCart(cid, pid, next);
+      const result = await new CartsService().deleteProductFromCart(cid, pid, next);
       if (result) {
         return res.status(200).json({ status: "success", payload: result._id });
       }

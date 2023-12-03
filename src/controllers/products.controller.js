@@ -28,7 +28,7 @@ const getAllProducts = async (req, res, next) => {
     req.query.adopted && (queries.adopted = req.query.adopted);
     queries.skip = (queries.page - 1) * queries.limit;
     let result = await new ProductsService().getAll(queries, next);
-    if (result.pets.length > 0) {
+    if (result.ProductModels.length > 0) {
       return res.status(200).json({ status: "success", payload: result });
     }
     return CustomError.newError(errors.notFound);
@@ -45,7 +45,7 @@ const getOne = async (req, res, next) => {
     if (result) {
       return res.status(200).json({ status: "success", payload: result });
     }
-    return CustomError.newError(errors.notFound);
+    return CustomError.newError(errors.notFoundOne);
   } catch (error) {
     error.where = "controller";
     return next(error);

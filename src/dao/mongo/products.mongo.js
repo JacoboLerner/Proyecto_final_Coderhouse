@@ -12,11 +12,11 @@ export default class ProductsMongo {
   };
   getAll = async ({ page, skip, limit, adopted }, next) => {
     try {
-      let pages = await ProductModel.countDocuments({ adopted: false });
+      let pages = await ProductModel.countDocuments();
       pages = Math.ceil(pages / limit);
       let prev = Number(page) === 1 ? null : Number(page) - 1;
       let next = Number(page) === pages ? null : Number(page) + 1;
-      let ProductModels = await ProductModel.find({ adopted })
+      let ProductModels = await ProductModel.find()
         .skip(skip)
         .limit(limit)
         .sort({ name: 1 });

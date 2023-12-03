@@ -28,9 +28,9 @@ export default class CartsService {
       return next(error);
     }
   };
-  addProductToCart = async (cid,pid, next) => {
+  addProductToCart = async (cid,pid,next) => {
     try {
-      return await this.repository.addProductToCart(cid,pid, next);
+      return await this.repository.addProductToCart(cid,pid,next);
     } catch (error) {
       error.where = "service";
       return next(error);

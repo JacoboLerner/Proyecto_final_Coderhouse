@@ -29,7 +29,7 @@ export default class CartMongo {
   };
   getBy = async (id, next) => {
     try {
-      return await CartModel.findById(id).populate("owner").populate("product");
+      return await CartModel.findById(id).populate("owner").populate("products.product");
     } catch (error) {
       error.where = "mongo";
       return next(error);
@@ -45,16 +45,23 @@ export default class CartMongo {
   };//addProductToCart
   addProductToCart = async (cid,pid, next) => {
     try {
+      const producto= await ProductModel.findById(pid)
+      const productPrice= producto.price
       const cart = await CartModel.findById(cid);
       const prodIndex = cart.products.findIndex(
         (prod) => prod.product == pid
     );
     if (prodIndex !== -1) {
         cart.products[prodIndex].quantity++;
+        cart.products[prodIndex].total=cart.products[prodIndex].price * cart.products[prodIndex].quantity;
     } else {
-        const newProduct = { product: pid, quantity: 1};
+        const newProduct = { product: pid, price:productPrice, quantity: 1, total:productPrice };
         cart.products.push(newProduct);
     }
+    const newtotalPrice = cart.products.reduce((sum, product) => sum + product.total, 0)
+    console.log(newtotalPrice);
+    await CartModel.findByIdAndUpdate(cid, { products: cart.products ,totalPrice:newtotalPrice}).exec();
+
     await cart.save();
     return cart;
     } catch (error) {

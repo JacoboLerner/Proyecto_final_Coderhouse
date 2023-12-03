@@ -15,9 +15,10 @@ const register = async (req, res, next) => {
 
 const login = async (req, res, next) => {
   try {
+    console.log(req.token);
     return res
       .status(200)
-      .cookie("token", req.token, { maxAge: 60 * 60 * 1000 })
+      .cookie("token", req.token, { maxAge: 60 * 60 * 1000*1000 })
       .json({ status: "success", message: "Logged in" });
   } catch (error) {
     error.where = "controller";

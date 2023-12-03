@@ -1,6 +1,6 @@
 export default {
-    notFoundOne: { statusCode: 404, status: "error", message: "Not found document" },
-    notFound: { statusCode: 404, status: "error", message: "Not found documents" },
+    notFoundOne: { statusCode: 404, status: "error", message: "Document not found" },
+    notFound: { statusCode: 404, status: "error", message: "Documents not found" },
     incomplete: { statusCode: 400, status: "error", message: "Incomplete values" },
     invalid: { statusCode: 400, status: "error", message: "Invalid params" },
     adopted: { statusCode: 400, status: "error", message: "Already added" },

@@ -5,6 +5,7 @@ import usersRouter from "./userRouter.js";
 import productsRouter from "./productRouter.js";
 import cartsRouter from "./cartRouter.js";
 import sessionsRouter from "./sessionRouter.js";
+import loggerRouter from "./loggerRouter.js";
 import swaggerJSDoc from "swagger-jsdoc";
 import { serve,setup } from "swagger-ui-express"
 import swaggerOptions from "../config/swagger.js";
@@ -19,6 +20,7 @@ router.use("/sessions", sessionsRouter);
 router.use("/tickets", ticketRouter);
 router.use("/payments/intents", paymentRouter);
 router.use("/sessions", sessionsRouter);
+router.use("/loggers", loggerRouter)
 router.use("/docs",serve,setup(specs))
 
 export default router;

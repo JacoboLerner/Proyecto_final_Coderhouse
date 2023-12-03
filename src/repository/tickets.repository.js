@@ -4,9 +4,9 @@ export default class TicketsRepository {
     constructor() {
       this.model = new dao.Ticket();
     }
-    create = async (cid,user, next) => {
+    create = async (cid,user,next) => {
       try {
-        return await this.model.create(cid,user, next);
+        return await this.model.create(cid,user,next);
       } catch (error) {
         error.where = "repository";
         return next(error);

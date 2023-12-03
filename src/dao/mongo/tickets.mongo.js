@@ -3,7 +3,7 @@ import ProductModel from "./models/product.model.js";
 import Ticket from "./models/ticket.schema.js";
 
 export default class TicketsMongo {
-    create = async (cid,user, next) => {
+    create = async (cid,user,next) => {
         try {
         const cart = await CartModel.findById(cid)
         let totalAmount = 0; // Monto total de la compra
@@ -12,17 +12,16 @@ export default class TicketsMongo {
         const unprocessedProducts = cart.products.filter(item => {
         const product = item.product;
         if (product.stock >= item.quantity) {
+            ;
               product.stock -= item.quantity; // Actualizar stock del producto
               totalAmount += product.price * item.quantity; // Actualizar monto total
-              purchasedProducts.push(item); // Agregar a los productos comprados
+              purchasedProducts.push(item);
+              console.log(totalAmount,item.price,item.quantity) // Agregar a los productos comprados
               return false; // Producto comprado y procesado
             }  
             return true; // Producto no procesado
         });  
-        if (purchasedProducts.length === 0) {
-            res.status(400).json({ error: 'No se pudo procesar ninguna compra' });
-            return;
-        }  
+
           // Actualizar los stocks de los productos comprados
         await Promise.all(purchasedProducts.map(async item => {
             const product = await ProductModel.findById(item.product._id);
@@ -30,9 +29,10 @@ export default class TicketsMongo {
             await product.save();
           }));    
           // Crear un ticket con los datos de la compra
+        console.log(cart.totalPrice);
         const ticketData = {
-                amount: totalAmount,
-                purchaser: user,
+                amount: cart.totalPrice,
+                purchaser: user.name,
         };
     
         const newTicket = await Ticket.create(ticketData);
@@ -52,7 +52,7 @@ export default class TicketsMongo {
 
     totalToPay = async (tid, next) => {
       try {
-        const result=await Ticket.findOne(tid)
+        const result=await Ticket.findById(tid)
         const result2=result.amount
         return result2;
       } catch (error) {

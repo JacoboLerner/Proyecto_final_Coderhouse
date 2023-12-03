@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 import { Server as SocketServer } from "socket.io";
 import {Server as HTTPServer} from "http";
 import mongoose from "mongoose";
@@ -13,13 +14,17 @@ import compression from "express-compression";
 import __dirname from "./dirname.js";
 import errorHandlers from "./middlewares/errorHandlers.js";
 import router from "./routes/indexRouter.js"
+import winston from "./config/winston.js";
+import initializePassport from "./config/passport.js";
+import logger from "./config/loggers/loggerFactory.js";
 
 
-const numberOfProcess = cpus().length-1
+const numberOfProcess = cpus().length-3
 const app = express();
 const httpServer = HTTPServer(app)
 const io =  new SocketServer(httpServer)
 
+app.use(cors())
 app.use(express.urlencoded({extended:true}));
 app.use(express.json());
 app.use(cookieParser());
@@ -38,6 +43,11 @@ app.use(
         }),
     })
 );
+initializePassport();
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use(winston)
 
 app.use(compression({
     brotli: {
@@ -56,11 +66,11 @@ app.use("/api",router)
 app.use(errorHandlers)
 
 if(cluster.isPrimary){
-        console.log("primary");
+        logger.INFO("primary");
         for ( let i=1; i<=numberOfProcess; i++){
             cluster.fork()
         }
         }else{
         console.log("worker",process.pid)
-        httpServer.listen(config.port,()=>console.log(`connectados en ${config.port}`));
+        httpServer.listen(config.port,()=>logger.INFO(`connectados en ${config.port}`));
         }

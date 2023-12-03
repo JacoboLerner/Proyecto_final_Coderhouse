@@ -6,7 +6,7 @@ export default async (req,res,next) => {
   try {
     const cookie = req.cookies['token']
     if (cookie) {
-      const user = jwt.verify(cookie,process.env.JWT)
+      const user = jwt.verify(cookie,process.env.PRIVATE_KEY)
       if (user.role === "admin"||"premium") {
         return next()
       }

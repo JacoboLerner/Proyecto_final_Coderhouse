@@ -2,6 +2,10 @@ import mongoose from "mongoose";
 
 const cartSchema = new mongoose.Schema({
     owner: { type: mongoose.SchemaTypes.ObjectId, ref: "users" },
+    totalPrice:
+    {
+      type:Number
+    },
     products: {
         type: [
             {
@@ -12,6 +16,12 @@ const cartSchema = new mongoose.Schema({
                 quantity: {
                     type: Number,
                     default: 1,
+                },
+                price: {
+                    type: Number
+                },
+                total: {
+                    type: Number
                 },
             },
         ],
