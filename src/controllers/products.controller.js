@@ -1,4 +1,4 @@
-import __dirname from "../dirname.js";
+import __dirname from "../../dirname.js";
 import ProductsService from "../services/products.service.js";
 import CustomError from "../config/CustomError.js";
 import errors from "../config/errors.js";
@@ -21,14 +21,13 @@ const getAllProducts = async (req, res, next) => {
       page: 1,
       limit: 4,
       skip: 0,
-      adopted: false,
     };
     req.query.page && (queries.page = req.query.page);
     req.query.limit && (queries.limit = Number(req.query.limit));
-    req.query.adopted && (queries.adopted = req.query.adopted);
     queries.skip = (queries.page - 1) * queries.limit;
     let result = await new ProductsService().getAll(queries, next);
     if (result.ProductModels.length > 0) {
+
       return res.status(200).json({ status: "success", payload: result });
     }
     return CustomError.newError(errors.notFound);

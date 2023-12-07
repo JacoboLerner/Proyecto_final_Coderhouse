@@ -15,13 +15,14 @@ const cookieExtractor=req=>{
     let token=null;
     if( req && req.cookies){
         token= req.cookies['token']
+        console.log(token);
     }
     return token
 }
 const initializePassport =()=>{
     passport.use("jwt", new JWTStrategy({
         jwtFromRequest: ExtractJWT.fromExtractors([cookieExtractor]),
-        secretOrKey: config.privateKey,
+        secretOrKey: process.env.PRIVATE_KEY,
     }, async(jwt_payload,done)=>{
         try{
             console.log(jwt_payload);
@@ -37,7 +38,7 @@ const initializePassport =()=>{
         clientID:"Iv1.16380aa0534ce3c7",
         clientSecret:"b7004419dda2c049449905155638560f53c78335",
         callbackURL:`http://localhost:${config.port}/api/sessions/githubcallback`
-    },async(req,accessToken, refreshToken,profile,done)=>{
+    },async(accessToken, refreshToken,profile,done)=>{
         try{
             let user= await User.findOne ({email: profile._json.email})
             const saltRounds = 10;
@@ -54,14 +55,11 @@ const initializePassport =()=>{
                       profile._json.email == config.adminName ? "admin" : "usuario",
                 })
                 await newUser.save()
-                const token = jwt.sign(newUser, process.env.JWT, { expiresIn: "1h" });
-                req.token = token;
-                done(null,newUser)
+                return done(null,newUser)
             }
             else{
-                const token = jwt.sign(user, process.env.JWT, { expiresIn: "1h" })
-                req.token = token;
-                done(null,user)
+
+                return done(null,user)
             }
         }catch(error){
             return done(error)

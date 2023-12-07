@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 const userPasswordCollection = "userPasswords"
-//uso de mongo poder caducar mail luego de una hora y asi controlar el restablecido
+
 const userPasswordSchema = new mongoose.Schema({
     email: { type: String, ref: "users" },
     token: { type: String, required: true },

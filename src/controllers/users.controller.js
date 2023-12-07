@@ -1,6 +1,7 @@
 import UsersService from "../services/users.service.js";
 import CustomError from "../config/CustomError.js";
 import errors from "../config/errors.js";
+import User from "../dao/mongo/models/user.model.js";
 
 const getAllUsers = async (req, res, next) => {
   try {
@@ -23,16 +24,36 @@ const getAllUsers = async (req, res, next) => {
   }
 };
 
-const updateUser = async (req, res, next) => {
+const updateUser = async (req, res, next) => { 
+  const userid = req.user._id
   try {
-    let uid = req.params.uid;
-    let data = req.body;
-    let result = await new UsersService().update(uid, data, next);
-    if (result) {
-      return res.status(200).json({ status: "success", payload: result._id });
-    }
-    return CustomError.newError(errors.notFoundOne);
-  } catch (error) {
+      const user= await User.findById(userid)
+      if(user.role =='user'){
+          const updatedUser= await User.findOneAndUpdate(
+              {_id:userid},
+          { role: 'premium'},
+          { new: true }
+      );
+      await updatedUser.save();
+      req.user.role= 'premium'
+      return res.render('role_cambiado', {
+          message:"El usuario ahora tiene role de: " + updatedUser.role
+      });
+  }else if(user.role=='premium'){
+      const updatedUser=await User.findOneAndUpdate(
+          {_id:userid},
+          { role: "user" },
+          { new: true }
+      );
+      req.user.role= 'user'
+      await updatedUser.save();
+      return res.render('role_cambiado', {
+          message:"El usuario ahora tiene role de: " + updatedUser.role
+      })
+ 
+  } else{
+      return CustomError.newError(errors.notFound);
+  }} catch (error) {
     error.where = "controller";
     return next(error);
   }

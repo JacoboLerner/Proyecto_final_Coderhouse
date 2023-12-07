@@ -1,4 +1,4 @@
-import __dirname from "../dirname.js"
+import __dirname from "../../dirname.js"
 
 const swaggerOptions = {
     definition: {
