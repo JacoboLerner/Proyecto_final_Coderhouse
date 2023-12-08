@@ -9,28 +9,21 @@ if (cookie) {
   })
     .then((res,req) => res.json())
     .then((res,req) => {
-      //console.log(res);
       if (res.response) {
+        document.querySelector("#register").remove();
         if (res.response.role === "admin") {
           const anchor3 = document.createElement("a");
-          anchor3.href = "/pages/New.html";
+          anchor3.href = "/api/views/add";
           anchor3.className = "btn btn-secondary m-1 py-1 px-3";
           anchor3.textContent = "New";
           document.querySelector(".navbar-nav").append(anchor3);
           const anchor4 = document.createElement("a");
-          anchor4.href = "/pages/Update.html";
+          anchor4.href = "/api/views/modify";
           anchor4.className = "btn btn-secondary m-1 py-1 px-3";
           anchor4.textContent = "Update";
           document.querySelector(".navbar-nav").append(anchor4);
           document.querySelector("#cart").remove()
-          document.querySelector("#login").remove();
-          const button = document.createElement("button");
-          button.id = "signout";
-          button.type = "button";
-          button.className = "btn btn-outline-dark m-1 py-1 px-3";
-          button.textContent = "Sign out";
-          button.addEventListener("click", signout);
-          document.querySelector(".navbar-nav").append(button);
+
         } 
         if (res.response.role === "user") {
             const anchor1 = document.createElement("a");
@@ -41,23 +34,15 @@ if (cookie) {
           }
           if (res.response.role === "premium") {
             const anchor3 = document.createElement("a");
-            anchor3.href = "/pages/New.html";
+            anchor3.href = "/api/views/add";
             anchor3.className = "btn btn-secondary m-1 py-1 px-3";
             anchor3.textContent = "New";
             document.querySelector(".navbar-nav").append(anchor3);
             const anchor4 = document.createElement("a");
-            anchor4.href = "/pages/Update.html";
+            anchor4.href = "/api/views/modify";
             anchor4.className = "btn btn-secondary m-1 py-1 px-3";
             anchor4.textContent = "Update";
             document.querySelector(".navbar-nav").append(anchor4);
-            document.querySelector("#login").remove();
-            const button = document.createElement("button");
-            button.id = "signout";
-            button.type = "button";
-            button.className = "btn btn-outline-dark m-1 py-1 px-3";
-            button.textContent = "Sign out";
-            button.addEventListener("click", signout);
-            document.querySelector(".navbar-nav").append(button);
           }
         document.querySelector("#login").remove();
         const button = document.createElement("button");

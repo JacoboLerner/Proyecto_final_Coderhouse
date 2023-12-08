@@ -3,9 +3,12 @@ import ProductModel from "./models/product.model.js";
 import Ticket from "./models/ticket.schema.js";
 
 export default class TicketsMongo {
-    create = async (cid,user,next) => {
+    create = async (cid,user,req,res,next) => {
         try {
-        const cart = await CartModel.findById(cid)
+        const cart = await CartModel
+        .findById(cid)                
+        .populate("products.product")
+        .lean()
         let totalAmount = 0; // Monto total de la compra
         const purchasedProducts = []; // Productos que se han comprado 
           // Filtrar los productos que se pueden comprar y actualizar el monto total
@@ -15,8 +18,7 @@ export default class TicketsMongo {
             ;
               product.stock -= item.quantity; // Actualizar stock del producto
               totalAmount += product.price * item.quantity; // Actualizar monto total
-              purchasedProducts.push(item);
-              console.log(totalAmount,item.price,item.quantity) // Agregar a los productos comprados
+              purchasedProducts.push(item);// Agregar a los productos comprados
               return false; // Producto comprado y procesado
             }  
             return true; // Producto no procesado
@@ -24,26 +26,29 @@ export default class TicketsMongo {
 
           // Actualizar los stocks de los productos comprados
         await Promise.all(purchasedProducts.map(async item => {
-            const product = await ProductModel.findById(item.product._id);
-            product.stock -= item.quantity;
-            await product.save();
+
+            const produc = await ProductModel.findById(item.product._id)
+            produc.stock -= item.quantity;
           }));    
           // Crear un ticket con los datos de la compra
-        console.log(cart.totalPrice);
         const ticketData = {
-                amount: cart.totalPrice,
-                purchaser: user.name,
+                amount: totalAmount,
+                purchaser: user.email,
         };
-    
         const newTicket = await Ticket.create(ticketData);
-    
           // Actualizar el carrito del usuario con los productos no procesados
         if (newTicket) {
             const cartNuevo = await CartModel.findById(cid)
             cartNuevo.products = unprocessedProducts;
+            cartNuevo.totalPrice = cart.totalPrice-totalAmount
             await cartNuevo.save()
-        }    
-        return newTicket;
+        }   
+        let resultDefinitivo={
+          purchasedProducts,
+          unprocessedProducts,
+          ticket: newTicket
+          }
+        return resultDefinitivo
         } catch (error) {
         error.where = "persistence";
         return next(error);

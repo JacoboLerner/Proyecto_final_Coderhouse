@@ -5,13 +5,16 @@ import User from "../dao/mongo/models/user.model.js";
 import UserPasswordModel from "../dao/mongo/models/user.password.schema.js";
 import bcrypt from 'bcryptjs'
 import { generateRandomString,createHash } from "../middlewares/passwordChange.js";
+import CartsService from "../services/carts.service.js";
 
 const service = new UsersService();
 
 const register = async (req, res, next) => {
   try {
     let data = req.body;
-    let result = await service.create(data, next);
+    let result = await service.create(data, next)
+    let data2 = { owner: result._id, products:[],totalPrice:0 };
+    let response = await new CartsService().create(data2, next)
     return res.status(201).json({ status: "success", payload: result });
   } catch (error) {
     error.where = "controller";
@@ -69,7 +72,7 @@ try {
 }
 
 const getForgetPassword = async (req, res) => {
-  res.render('forget_password');
+  res.render('forget_password',{title:"Recover password"});
 }
 
 const executeForgetPassword =  async (req, res) => {
@@ -120,7 +123,7 @@ const executeForgetPassword =  async (req, res) => {
     }
     const user = userPassword.email
     res.render('reset_password', {
-        user
+        user,title:"Reset Password"
     })
 }
 
@@ -136,7 +139,7 @@ const resetPassword = async (req, res) => {
       } 
       await User.findByIdAndUpdate(user._id, { password: createHash(newPassword) })
       res.render("password_reset",{
-          message: 'Se ha creado una nueva contraseña'
+          message: 'Se ha creado una nueva contraseña',title:"Password reset"
       })
       await UserPasswordModel.deleteOne({
           email: req.params.user

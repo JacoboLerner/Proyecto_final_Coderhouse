@@ -8,7 +8,8 @@ export default class UserDTO {
       email: user.email,
       password: await createHash(user.password),
       role: user.role || "user",
-      age:user.age
+      age:user.age,
+      cart:user.cart
     };
   };
 }

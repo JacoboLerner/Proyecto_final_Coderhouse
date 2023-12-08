@@ -15,7 +15,7 @@ fetch("/api/products?page=" + currentPage)
               <img src="${each.thumbnail}" style="height: 280px" class="card-img-top object-fit-cover" alt="...">
               <div class="card-body d-flex flex-column justify-content-center align-items-center">
                 <h4 class="card-title">${each.title} - ${each.description}</h5>
-                <h5 class="card-title">$${each.price} pesos - ${each.stock}</h5>
+                <h5 class="card-title">$${each.price} pesos -Stock: ${each.stock}</h5>
                 <a href="/pages/product.html?pid=${each._id}" style="width: 106px" class="btn btn-secondary m-0" id="buttton">Agregar!</a>
               </div>
             </article>`

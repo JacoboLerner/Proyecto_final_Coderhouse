@@ -1,0 +1,450 @@
+components:
+  schemas:
+    CreateProduct:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: Id autogenerado de Mongo
+        title:
+          type: string
+          description: Nombre del producto
+        description:
+          type: string
+          description: Descripción del producto
+        code:
+          type: string
+          description: Código del producto
+        price:
+          type: number
+          description: Precio del producto
+        stock:
+          type: number
+          description: Cantidad en stock del producto
+        category:
+          type: string
+          description: Categoria a la que pertenece el producto
+        thumbnail:
+          type: string
+          description: Links a las rutas de las imágenes del producto
+        owner:
+          type: string
+          description: Datos de quien creó el producto en la base de datos
+      example:
+          title: Producto 1
+          description: Descripción del producto 1
+          price: 100
+          thumbnail: https://cdn3.iconfinder.com/data/icons/education-209/64/bus-vehicle-transport-school-128.png
+          code: 1
+          stock: 10
+          category: Categoria 1
+    UpdateProduct:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Nombre del producto
+        description:
+          type: string
+          description: Descripción del producto
+        code:
+          type: string
+          description: Código del producto
+        price:
+          type: number
+          description: Precio del producto
+        stock:
+          type: number
+          description: Cantidad en stock del producto
+        category:
+          type: string
+          description: Categoria a la que pertenece el producto
+        thumbnail:
+          type: string
+          description: Links a las rutas de las imágenes del producto
+      example:
+          title: Don Saturino
+          description: La galletita de los Argentinos y del Mundo
+          price: 100
+          thumbnail: https://clickandfoods.com/cdn/shop/products/2141429_f.jpg?v=1596957519\,
+          code: dfnfdnfnfn
+          stock: 45208
+          category: alimentos
+  responses:
+    create:
+      type: object
+      properties:
+        status: Indicador del estado de la respuesta
+        payload: Documento de producto creado correctamente
+      example:
+        status: success
+        payload:
+          _id: 657347857e9df12125b12f11
+          title: Don Saturr
+          description: La galletita de los Argentinos
+          price: 100
+          thumbnail: https://clickandfoods.com/cdn/shop/products/2141429_f.jpg?v=1596957519\,
+          code: dfnfdnfnfn
+          stock: 45208
+          category: alimentos
+    read:
+      type: object
+      properties:
+        status: Indicador del estado de la respuesta
+        payload: Devuelve los productos
+      example:
+        status: success
+        payload:
+          - _id: 657347857e9df12125b12f11
+            title: Don Saturr
+            description: La galletita de los Argentinos
+            price: 100
+            thumbnail: https://clickandfoods.com/cdn/shop/products/2141429_f.jpg?v=1596957519\,
+            code: dfnfdnfnfn
+            stock: 45208
+            category: alimentos
+          - _id: 657347857e9df12125b12f11
+            title: Don Saturr
+            description: La galletita de los Argentinos
+            price: 100
+            thumbnail: https://clickandfoods.com/cdn/shop/products/2141429_f.jpg?v=1596957519\,
+            code: dfnfdnfnfn
+            stock: 45208
+            category: alimentos
+          - _id: 657347857e9df12125b12f11
+            title: Don Saturr
+            description: La galletita de los Argentinos
+            price: 100
+            thumbnail: https://clickandfoods.com/cdn/shop/products/2141429_f.jpg?v=1596957519\,
+            code: dfnfdnfnfn
+            stock: 45208
+            category: alimentos
+    readOne:
+      type: object
+      properties:
+        status: Indicador del estado de la respuesta
+        payload: Devuelve el producto
+      example:
+        status: success
+        payload:
+          - _id: 657347857e9df12125b12f11
+            title: Don Saturr
+            description: La galletita de los Argentinos
+            price: 100
+            thumbnail: https://clickandfoods.com/cdn/shop/products/2141429_f.jpg?v=1596957519\,
+            code: dfnfdnfnfn
+            stock: 45208
+            category: alimentos
+    update:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Indicador del estado de la respuesta
+        payload:
+          type: string
+          description: ObjectId del producto modificado
+      example:
+          status: success
+          payload: 6541aae1e7b2683607f2b4da
+    delete:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Indicador del estado de la respuesta
+        payload:
+          type: string
+          description: ObjectId del producto eliminado
+      example:
+          status: success
+          payload: 6541aae1e7b2683607f2b4da
+    auth:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Estado de la solicitud
+        from:
+          type: string
+          description: Descripción del endpoint del error
+        message:
+          type: string
+          description: Descripción del error
+      example:
+        status: auth
+        from: POST /api/sessions/signout middleware
+        message: Invalid credentials
+    forbidden:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Estado de la solicitud
+        from:
+          type: string
+          description: Descripción del endpoint del error
+        message:
+          type: string
+          description: Descripción del error
+      example:
+        status: forbidden
+        from: POST /api/sessions/signout middleware
+        message: Not Allowed
+    incomplete:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Estado de la solicitud
+        from:
+          type: string
+          description: Descripción del endpoint del error
+        message:
+          type: string
+          description: Descripción del error
+      example:
+        status: error
+        from: POST /api/sessions/register middleware
+        message: Incomplete values
+    notFound:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Indicador del estado de la respuesta
+        from:
+          type: string
+          description: Indicador de dónde se cometió el error
+        message:
+          type: string
+          description: Indicador de qué error se cometió
+      example:
+        status: error
+        from: controller
+        message: Not found documents
+    fatal:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Indicador del estado de la respuesta
+        from:
+          type: string
+          description: Indicador de dónde se cometió el error
+        message:
+          type: string
+          description: Indicador de qué error se cometió
+      example:
+        status: fatal
+        from: error handler
+        message: dat is not defined
+  securitySchemes:
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: token
+paths:
+  /api/products:
+    post:
+      summary: Crear un nuevo producto 
+      tags:
+        - Product
+      security:
+        - cookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#components/schemas/CreateProduct'
+      responses:
+        "201":
+          description: Éxito en la carga de un producto
+          content:
+            application/json:
+              schema:
+                $ref: '#components/responses/create'
+        "401":
+          description: Credenciales invalidas
+          content:
+            application/json:
+              schema:
+                $ref: '#components/responses/auth'
+        "403":
+          description: Acceso no permitido
+          content:
+            application/json:
+              schema:
+                $ref: '#components/responses/forbidden'
+        "500":
+          description: Falla del servidor al crear un producto
+          content:
+            application/json:
+              schema:
+                $ref: '#components/responses/fatal'
+    get:
+      summary: Leer los productos del sistema
+      tags:
+        - Product
+      parameters:
+        - name: page
+          in: query
+          type: integer
+          description: Numero de página a mostrar
+        - name: limit
+          in: query
+          type: integer
+          description: Numero de documentos a mostrar por página
+      responses:
+        "200":
+          description: Éxito en la lectura de productos
+          content:
+            application/json:
+              schema:
+                $ref: '#components/responses/read'
+        "404":
+          description: Documento/s no encontrados
+          content:
+            application/json:
+              schema:
+                $ref: '#components/responses/notFound'
+        "500":
+          description: Falla del servidor al leer los productos
+          content:
+            application/json:
+              schema:
+                $ref: '#components/responses/fatal'       
+  /api/products/{pid}:
+    get:
+      summary: Leer uno de los productos del sistema
+      tags:
+        - Product
+      security:
+        - cookieAuth: []
+      parameters:
+        - name: pid
+          in: path
+          required: true
+          description: ObjectId del producto a traer
+          schema:
+            $type: string
+      responses:
+        "200":
+          description: Éxito en la lectura del producto
+          content:
+            application/json:
+              schema:
+                $ref: '#components/responses/readOne'
+        "404":
+          description: Documento no encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#components/responses/notFound'
+        "500":
+          description: Falla del servidor al leer el  producto
+          content:
+            application/json:
+              schema:
+                $ref: '#components/responses/fatal' 
+    put:
+      summary: Actualizar los datos de un producto
+      tags:
+        - Product
+      security:
+        - cookieAuth: []
+      parameters:
+        - name: pid
+          in: path
+          required: true
+          description: ObjectId del producto a modificar
+          schema:
+            $type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#components/schemas/UpdateProduct'
+      responses:
+        "200":
+          description: Éxito al actualizar un producto
+          content:
+            application/json:
+              schema:
+                $ref: '#components/responses/update'
+        "401":
+          description: Credenciales invalidas
+          content:
+            application/json:
+              schema:
+                $ref: '#components/responses/auth'
+        "403":
+          description: Acceso no permitido
+          content:
+            application/json:
+              schema:
+                $ref: '#components/responses/forbidden'
+        "404":
+          description: Documento/s no encontrados
+          content:
+            application/json:
+              schema:
+                $ref: '#components/responses/notFound'
+        "500":
+          description: Falla del servidor al actualizar u producto
+          content:
+            application/json:
+              schema:
+                $ref: '#components/responses/fatal'
+    delete:
+      summary: Eliminar un producto del sistema
+      tags:
+        - Product
+      security:
+        - cookieAuth: []
+      parameters:
+        - name: pid
+          in: path
+          required: true
+          description: ObjectId del producto a eliminar
+          schema:
+            $type: string
+      responses:
+        "200":
+          description: Éxito al eliminar un producto
+          content:
+            application/json:
+              schema:
+                $ref: '#components/responses/delete'
+        "400":
+          description: Campos faltantes
+          content:
+            application/json:
+              schema:
+                $ref: '#components/responses/incomplete'
+        "401":
+          description: Credenciales invalidas
+          content:
+            application/json:
+              schema:
+                $ref: '#components/responses/auth'
+        "403":
+          description: Acceso no permitido
+          content:
+            application/json:
+              schema:
+                $ref: '#components/responses/forbidden'
+        "404":
+          description: Documento/s no encontrados
+          content:
+            application/json:
+              schema:
+                $ref: '#components/responses/notFound'
+        "500":
+          description: Falla del servidor al eliminar el producto
+          content:
+            application/json:
+              schema:
+                $ref: '#components/responses/fatal'

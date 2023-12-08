@@ -1,0 +1,78 @@
+<nav class="navbar navbar-expand-md bg-secondary w-100">
+    <div class="container-fluid">
+        <button class="navbar-toggler btn btn-secondary m-1" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false"
+            aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse w-100" id="navbarNavAltMarkup">
+            <div class="navbar-nav w-100 d-flex">
+                <a href="/index.html" type="button" class="btn btn-dark m-1 py-1 px-3">Home</a>
+                <a id="register" href="./register.html" type="button"
+                    class="btn btn-secondary m-1 py-1 px-3">Register</a>
+                <a href="/pages/products.html" type="button" class="btn btn-secondary m-1 py-1 px-3">Products</a>
+
+                <p
+                    class="title flex-grow-1 text-dark text-center m-1 px-3 d-flex justify-content-center align-items-center">
+                    E-Shop "La ideal"
+                </p>
+                <a id="login" href="./login.html" type="button" class="btn btn-outline-dark m-1 py-1 px-3">Login</a>
+            </div>
+        </div>
+    </div>
+</nav>
+<div>
+    <h1 class="m-2 p-2">
+        Cart
+        {{cid}} de {{user}}
+</div>
+<div>
+    <div class="p-2 m-2">
+        <h2>Productos agregados al carrito</h2>
+        <table class="table table-light table-striped pr-3 mr-2">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">Product</th>
+                    <th scope="col">Cantidad</th>
+                    <th scope="col">Precio</th>
+                    <th scope="col">Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each products}}
+                <tr>
+                    <td>{{this.product}}</td>
+                    <td>{{this.quantity}}</td>
+                    <td>{{this.price}}</td>
+                    <td>{{this.total}}</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="p-2 m-2">
+    El precio final es de
+    <strong>{{totalprice}}</strong>
+    pesos argentinos.
+</div>
+
+{{#if products.length}}
+<button id="purchaseBtn" class="btn btn-success m-2 mb-3" data-cart-id="{{cid}}">Finalizar Compra</button>
+<!-- Agregar atributo de datos -->
+{{/if}}
+
+<div id="purchaseResults" class="ticket" style="display: none;" class="m-3 p-3">
+    <h2 class="m-2">Productos Comprados</h2>
+    <ul id="purchasedProducts"></ul>
+    <h2 class="m-2">Productos No Comprados</h2>
+    <ul id="notPurchasedProducts"></ul>
+    <h2 class="m-2">Precio Total</h2>
+    <ul id="total"></ul>
+</div>
+
+<footer class="bg-secondary w-100 py-2 d-flex justify-content-center">
+    <a href="/api/docs" type="button" class="btn btn-dark m-1 py-1 px-3">API</a>
+</footer>
+<script type="module" src="/scripts/cartPurchase.js"></script>
+<script src="/scripts/online.js"></script>

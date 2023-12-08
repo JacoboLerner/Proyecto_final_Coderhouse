@@ -10,7 +10,7 @@ export default class ProductsMongo {
       return next(error);
     }
   };
-  getAll = async ({ page, skip, limit, adopted }, next) => {
+  getAll = async ({ page, skip, limit }, next) => {
     try {
       let pages = await ProductModel.countDocuments();
       pages = Math.ceil(pages / limit);
@@ -19,7 +19,6 @@ export default class ProductsMongo {
       let ProductModels = await ProductModel.find()
         .skip(skip)
         .limit(limit)
-        .sort({ name: 1 });
       return { prev, next, ProductModels };
     } catch (error) {
       error.where = "mongo";
@@ -34,9 +33,14 @@ export default class ProductsMongo {
       return next(error);
     }
   };
-  update = async (id, data, next) => {
+  update = async (id, data,user, next) => {
     try {
-      return await ProductModel.findByIdAndUpdate(id, data);
+      const prod = await ProductModel.findById(id) 
+      if (prod.owner == user._id || user.role == 'admin'){
+        return await ProductModel.findByIdAndUpdate(id, data);
+      }else{
+        return false
+      }
     } catch (error) {
       error.where = "mongo";
       return next(error);

@@ -3,7 +3,8 @@ export default {
     notFound: { statusCode: 404, status: "error", message: "Documents not found" },
     incomplete: { statusCode: 400, status: "error", message: "Incomplete values" },
     invalid: { statusCode: 400, status: "error", message: "Invalid params" },
-    adopted: { statusCode: 400, status: "error", message: "Already added" },
+    notOwn: { statusCode: 403, status: "forbidden", message: "Cannot add own product to Cart" },
     auth: { statusCode: 401, status: "auth", message: "Invalid credentials" },
-    forbidden: { statusCode: 403, status: "forbidden", message: "Not Allowed" }
+    forbidden: { statusCode: 403, status: "forbidden", message: "Not Allowed" },
+    forbiddenOwn: { statusCode: 403, status: "forbidden", message: "Not Allowed to modify products that are not own" }
   }

@@ -14,6 +14,7 @@ export default async (req, res, next) => {
     }
     CustomError.newError(errors.auth);
   } catch (error) {
+    res.clearCookie("token")
     error.where = "middleware";
     return next(error);
   }

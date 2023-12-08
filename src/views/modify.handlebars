@@ -1,0 +1,90 @@
+<nav class="navbar navbar-expand-md bg-secondary w-100">
+    <div class="container-fluid">
+        <button class="navbar-toggler btn btn-secondary m-1" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false"
+            aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse w-100" id="navbarNavAltMarkup">
+            <div class="navbar-nav w-100 d-flex">
+                <a href="/index.html" type="button" class="btn btn-dark m-1 py-1 px-3">Home</a>
+                <a id="register" href="./register.html" type="button"
+                    class="btn btn-secondary m-1 py-1 px-3">Register</a>
+                <a href="/pages/products.html" type="button" class="btn btn-secondary m-1 py-1 px-3">Products</a>
+                <a id="cart" href="/api/views/cart" type="button" class="btn btn-secondary m-1 py-1 px-3">Cart</a>
+                <p
+                    class="title flex-grow-1 text-dark text-center m-1 px-3 d-flex justify-content-center align-items-center">
+                    E-Shop "La ideal"
+                </p>
+                <a id="login" href="./login.html" type="button" class="btn btn-outline-dark m-1 py-1 px-3">Login</a>
+            </div>
+        </div>
+    </div>
+</nav>
+<div class="container p-3">
+    <div class="row">
+        <div class="col-12 p-2 d-flex flex-column justify-content-center align-items-center">
+            <h1>Modify</h1>
+            <h2>Elegir con id que producto a modificar y completar todo a modificar, en blanco enviara valores en blanco
+            </h2>
+        </div>
+        <label for="products">Choose a Product:</label>
+        <select name="productId">
+            {{#each products}}
+            <option>{{this}}</option>
+            {{/each}}
+        </select>
+        <form class="bg-body p-3 rounded d-flex flex-column justify-content-center align-items-center">
+            <fieldset class="mb-3">
+                <label for="_id" class="form-label text-center w-100">_id</label>
+                <input type="text" class="form-control" id="_id" />
+            </fieldset>
+            <fieldset class="mb-3">
+                <label for="title" class="form-label text-center w-100">Title</label>
+                <input type="text" class="form-control" id="title" />
+            </fieldset>
+
+            <fieldset class="mb-3">
+                <label for="description" class="form-label text-center w-100">Description</label>
+                <input type="text" class="form-control" id="description" />
+            </fieldset>
+            <fieldset class="mb-3">
+                <label for="code" class="form-label text-center w-100">Code</label>
+                <input type="text" class="form-control" id="code" />
+            </fieldset>
+            <fieldset class="mb-3">
+                <label for="category" class="form-label text-center w-100">Category</label>
+                <input type="text" class="form-control" id="category" />
+            </fieldset>
+            <fieldset class="mb-3">
+                <label for="price" class="form-label text-center w-100">Price</label>
+                <input type="number" class="form-control" id="price" />
+            </fieldset>
+            <fieldset class="mb-3">
+                <label for="stock" class="form-label text-center w-100">Stock</label>
+                <input type="text" class="form-control" id="stock" />
+            </fieldset>
+            <fieldset class="mb-3">
+                <label for="thumbnail" class="form-label text-center w-100">Thumbnail</label>
+                <input type="text" class="form-control" id="thumbnail" />
+            </fieldset>
+            <div class="alerts d-flex justify-content-between align-items-center w-100 mb-3"></div>
+            <div class="d-flex justify-content-center align-items-center w-100">
+                {{#if this.userInfo.role}}
+                <button id="submit" type="button" class="btn btn-dark btn-lg py-1 px-3">Modify!</button></a>
+                {{/if}}
+
+
+            </div>
+    </div>
+
+</div>
+
+
+</div>
+<footer class="bg-secondary w-100 py-2 d-flex justify-content-center">
+    <a href="/api/docs" type="button" class="btn btn-dark m-1 py-1 px-3">API</a>
+</footer>
+
+<script src='/scripts/modify.js'></script>
+<script src="/scripts/online.js"></script>

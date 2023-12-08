@@ -28,9 +28,9 @@ export default class ProductsRepository {
       return next(error);
     }
   };
-  update = async (id, data, next) => {
+  update = async (id, data,user, next) => {
     try {
-      return this.model.update(id, data, next);
+      return this.model.update(id, data,user, next);
     } catch (error) {
       error.where = "repository";
       return next(error);

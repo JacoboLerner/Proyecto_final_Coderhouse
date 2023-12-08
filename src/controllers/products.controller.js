@@ -19,7 +19,7 @@ const getAllProducts = async (req, res, next) => {
   try {
     let queries = {
       page: 1,
-      limit: 4,
+      limit: 3,
       skip: 0,
     };
     req.query.page && (queries.page = req.query.page);
@@ -53,13 +53,14 @@ const getOne = async (req, res, next) => {
 
 const updateProduct = async (req, res, next) => {
   try {
+    let user=req.user
     let pid = req.params.pid;
     let data = req.body;
-    let result = await new ProductsService().update(pid, data, next);
+    let result = await new ProductsService().update(pid, data,user, next);
     if (result) {
       return res.status(200).json({ status: "success", payload: result._id });
     }
-    return CustomError.newError(errors.notFoundOne);
+    return CustomError.newError(errors.forbiddenOwn);
   } catch (error) {
     error.where = "controller";
     return next(error);

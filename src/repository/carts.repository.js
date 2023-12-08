@@ -22,15 +22,15 @@ export default class CartsRepository {
   };
   getBy = async (id, next) => {
     try {
-      return await this.model.geetBy(id, next);
+      return await this.model.getBy(id, next);
     } catch (error) {
       error.where = "repository";
       return next(error);
     }
   };
-  addProductToCart = async (cid,pid,next) => {
+  addProductToCart = async (cid,pid,user,next) => {
     try {
-      return await this.model.addProductToCart(cid,pid,next);
+      return await this.model.addProductToCart(cid,pid,user,next);
     } catch (error) {
       error.where = "repository";
       return next(error);

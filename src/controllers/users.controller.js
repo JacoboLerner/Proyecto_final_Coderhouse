@@ -27,6 +27,7 @@ const getAllUsers = async (req, res, next) => {
 const updateUser = async (req, res, next) => { 
   const userid = req.user._id
   try {
+    
       const user= await User.findById(userid)
       if(user.role =='user'){
           const updatedUser= await User.findOneAndUpdate(
@@ -36,7 +37,9 @@ const updateUser = async (req, res, next) => {
       );
       await updatedUser.save();
       req.user.role= 'premium'
-      return res.render('role_cambiado', {
+      return res
+      .clearCookie("token")
+      .render('role_cambiado', {
           message:"El usuario ahora tiene role de: " + updatedUser.role
       });
   }else if(user.role=='premium'){
@@ -47,7 +50,9 @@ const updateUser = async (req, res, next) => {
       );
       req.user.role= 'user'
       await updatedUser.save();
-      return res.render('role_cambiado', {
+      return res
+      .clearCookie("token")
+      .render('role_cambiado', {
           message:"El usuario ahora tiene role de: " + updatedUser.role
       })
  

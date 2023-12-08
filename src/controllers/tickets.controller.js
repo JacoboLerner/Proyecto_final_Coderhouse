@@ -5,10 +5,10 @@ import errors from "../config/errors.js";
 const createTicket = async (req, res, next) => {
     try {
       const user= req.user
-      const cartId = req.params.cid;
-      let result = await new TicketsService().create(cartId,user,next);
+      const cid = req.params.cid;
+      let result = await new TicketsService().create(cid,user,next);
       if (result) {
-        return res.status(200).json({ status: "success", payload: result._id });
+        return res.status(200).json( result );
       }
       return CustomError.newError(errors.notFoundOne);
     } catch (error) {

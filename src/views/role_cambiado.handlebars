@@ -1,4 +1,43 @@
+<nav class="navbar navbar-expand-md bg-secondary w-100">
+  <div class="container-fluid">
+    <button
+      class="navbar-toggler btn btn-secondary m-1"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNavAltMarkup"
+      aria-controls="navbarNavAltMarkup"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse w-100" id="navbarNavAltMarkup">
+      <div class="navbar-nav w-100 d-flex">
+        <a
+          href="/index.html"
+          type="button"
+          class="btn btn-dark m-1 py-1 px-3"
+        >Home</a>
+        <a
+          href="/pages/products.html"
+          type="button"
+          class="btn btn-secondary m-1 py-1 px-3"
+        >Products</a>
+        <p
+          class="title flex-grow-1 text-dark text-center m-1 px-3 d-flex justify-content-center align-items-center"
+        >
+          E-Shop "La ideal"
+        </p>
+      </div>
+    </div>
+  </div>
+</nav>
+
 <h1 class=" m-2">Role ha sido cambiado</h1>
 <button class="btn btn-info m-2" onclick="location.href='/pages/products.html'"> Volver al Inicio</button>
 <hr>
 <h2 class="m-2">{{this.message}}</h2>
+<footer class="bg-secondary w-100 py-2 d-flex justify-content-center">
+  <a href="/api/docs" type="button" class="btn btn-dark m-1 py-1 px-3">API</a>
+</footer>
+<script type="module" src="/scripts/cartPurchase.js"></script>

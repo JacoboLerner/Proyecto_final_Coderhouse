@@ -15,10 +15,14 @@ components:
         password:
           type: string
           description: Contraseña guardada en la base de datos
+        age:
+          type: number
+          description: edad 
       example:
-        first_name: Emiliano
+        first_name: Jacobo
         last_name: Coder
-        email: emilio@coder.com
+        email: jacobo@coder.com
+        age: 32
         password: coder
     Login:
       type: object
@@ -30,8 +34,8 @@ components:
           type: string
           description: Contraseña guardada en la base de datos
       example:
-        email: igna@coder.com
-        password: hola1234
+        email: jake@coder.com
+        password: hi123
   securitySchemes:
     cookieAuth:
       type: apiKey
@@ -50,12 +54,13 @@ components:
       example:
         status: success
         payload:
-          _id: 653bc489806d3d93518d1ea8
-          first_name: Emiliano
+          first_name: Jacobo
           last_name: Coder
-          email: emilio@coder.com
-          password: coder
+          email: jacobo@coder.com
+          password: $2a$10$GV8JImY/j914NaCA7b0khebA/ZxNL/OjUlqcSlC5biKf/CsBCbrUS
+          age: 32
           role: user
+          _id: 6141g3f5b13b5dsfbdsb
     login:
       type: object
       properties:
@@ -80,6 +85,7 @@ components:
       example:
         status: success
         message: Signed out
+  errorResponses:
     auth:
       type: object
       properties:
@@ -127,7 +133,7 @@ components:
       example:
         status: fatal
         from: POST /api/sessions/login error handler
-        message: Dat is not defined
+        message: Data is not defined
 paths:
   /api/sessions/register:
     post:
@@ -142,7 +148,7 @@ paths:
             schema:
               $ref: '#/components/schemas/Register'
       responses:
-        '200':
+        '201':
           description: El éxito retorna el id del usuario registrado
           content:
             application/json:
@@ -185,7 +191,7 @@ paths:
             Set-Cookie:
               schema: 
                 type: string
-                example: token=yJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiaWduYSBjb2RlciIsInJvbGUiOiJ1c2VyIiwiZW1haWwiOiJpZ25hQGNvZGVyLmNvbSIsImlhdCI6MTY5ODg0MjkzNSwiZXhwIjoxNjk4ODQ2NTM1fQ.FfpFL2XuKTp0MW6F_M8dy5qbKqHtYsw4mDET2611ddI
+                example: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiQWRtaW4gU3VwcmVtbyIsInJvbGUiOiJhZG1pbiIsImVtYWlsIjoiYWRtaW5Db2RlckBjb2Rlci5jb20iLCJfaWQiOiI2NTBlZjQyNzA2NzY3NjNmYTczNjk1NjQiLCJpYXQiOjE3MDIwNTYwNjgsImV4cCI6MTcwMjA1OTY2OH0.cTbTWdlJ72wzwzm2NYJ64DmfT4_Pa8F7xUIhTlJGSeI
           content:
             application/json:
               schema:

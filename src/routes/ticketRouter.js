@@ -4,7 +4,7 @@ import isUser from "../middlewares/isUser.js";
 
 const router = Router();
 
-router.post("/:cid",isUser, createTicket);
-router.get("/:tid", totalToPay);
+router.get("/:cid",isUser, createTicket);
+router.get("/total/:tid", totalToPay);
 
 export default router;

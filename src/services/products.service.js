@@ -28,9 +28,9 @@ export default class PetsService {
       return next(error);
     }
   };
-  update = async (id, data, next) => {
+  update = async (id, data,user, next) => {
     try {
-      return await this.repository.update(id, data, next);
+      return await this.repository.update(id, data,user, next);
     } catch (error) {
       error.where = "service";
       return next(error);

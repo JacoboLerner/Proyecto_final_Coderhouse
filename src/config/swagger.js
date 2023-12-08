@@ -5,10 +5,9 @@ const swaggerOptions = {
       openapi: '3.0.1',
       info: {
         title: 'Documentación de la API del Ecommerce',
-        description: 'Proyecto Coderhouse 2022'
+        description: 'Proyecto Coderhouse 2023'
       }
     },
-    apis: [`${ __dirname}/docs/*.yaml`]
+    apis: [`${ __dirname}/src/docs/*.yaml`]
   };
-
   export default swaggerOptions

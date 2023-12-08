@@ -15,12 +15,12 @@ router.post("/register",isValidEmail, areValidProps, register);
 router.post("/login",isValidUser, isValidPassword,createToken, login);
 router.post("/signout",isUser, signout);
 router.post("/online",isUser, online);
-router.get("/premium", updateUser);
+router.get("/premium",isUser, updateUser);
 router.get("/github", passport.authenticate("github", { scope: ["user:email"] }),(req, res) => {} );
 router.get("/githubcallback",passport.authenticate("github"), createToken, gitAccess);
 router.get("/forget_password", getForgetPassword);
-router.post('/forget_password',executeForgetPassword); // 
-router.get('/verify-token/:token',verifyToken )
-router.post('/reset_password/:user',resetPassword )
+router.post("/forget_password",executeForgetPassword); // 
+router.get("/verify-token/:token",verifyToken )
+router.post("/reset_password/:user",resetPassword )
 
 export default router;
