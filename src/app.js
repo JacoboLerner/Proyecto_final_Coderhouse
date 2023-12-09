@@ -72,12 +72,4 @@ app.use("/api",router)
 
 app.use(errorHandlers)
 
-if(cluster.isPrimary){
-        logger.INFO("primary");
-        for ( let i=1; i<=numberOfProcess; i++){
-            cluster.fork()
-        }
-        }else{
-        console.log("worker",process.pid)
-        httpServer.listen(config.port || 8080,()=>logger.INFO(`connectados en ${config.port}`));
-        }
+httpServer.listen(config.port, () => console.log(`Listening on ${config.port}`));
