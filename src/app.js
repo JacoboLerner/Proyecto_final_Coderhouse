@@ -79,5 +79,5 @@ if(cluster.isPrimary){
         }
         }else{
         console.log("worker",process.pid)
-        httpServer.listen(config.port,()=>logger.INFO(`connectados en ${config.port}`));
+        httpServer.listen(config.port || 8080,()=>logger.INFO(`connectados en ${config.port}`));
         }
