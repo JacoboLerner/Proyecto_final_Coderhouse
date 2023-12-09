@@ -6,8 +6,8 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon src/app.js --mode production",
-    "dev": "nodemon src/app.js --mode development",
+    "start": "node src/app.js --mode production",
+    "dev": "node src/app.js --mode development",
     "super": "mocha test/supertest"
   },
   "keywords": [],
