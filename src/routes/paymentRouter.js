@@ -1,10 +1,11 @@
 import { Router } from "express";
 import nodemailer from 'nodemailer'
 import config from "../config/env.js";
+import isUser from "../middlewares/isUser.js";
 
 const router = Router();
 
-router.post('/', async (req, res) => {
+router.post('/', isUser,async (req, res) => {
     let configMail = {
         service: 'gmail',
         auth: {
