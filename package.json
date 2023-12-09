@@ -6,8 +6,8 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node src/app.js --mode production",
-    "dev": "node src/app.js --mode development",
+    "start": "nodemon src/app.js --omit=dev",
+    "dev": "nodemon src/app.js --mode development",
     "super": "mocha test/supertest"
   },
   "keywords": [],
@@ -46,8 +46,6 @@
     "winston": "^3.11.0"
   },
   "devDependencies": {
-    "chai": "^4.3.10",
-    "mocha": "^10.2.0",
     "supertest": "^6.3.3"
   }
 }
